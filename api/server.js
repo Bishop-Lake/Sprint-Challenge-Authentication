@@ -9,7 +9,7 @@ const jokesRouter = require('../jokes/jokes-router.js');
 const server = express();
 
 server.get('/', (req, res) => {
-    res.send('Indeed, i work!')
+    res.status(200).send('Indeed, i work!')
 })
 
 server.use(helmet());
