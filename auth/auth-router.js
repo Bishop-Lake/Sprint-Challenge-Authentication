@@ -26,7 +26,21 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  // implement login
+  let {username, password} = req.body
+
+  Users.findBy({username})
+    .first()
+    .then(user => {
+      if (user && bcrypt.compareSync(password, user.password)) {
+        const token = generateToken(user)
+        res.status(200).json({token})
+      } else {
+        res.status(401).json({Message: "You have either entered the wrong username or password"})
+      }
+    })
+    .catch(error => {
+      res.status(500).json({Error: 'there was an issue logging into the account!'})
+    })
 });
 
 //to create the token
