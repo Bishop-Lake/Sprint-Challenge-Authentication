@@ -8,6 +8,10 @@ const jokesRouter = require('../jokes/jokes-router.js');
 
 const server = express();
 
+server.get('/', (req, res) => {
+    res.status(200).send('Indeed, i work!')
+})
+
 server.use(helmet());
 server.use(cors());
 server.use(express.json());
