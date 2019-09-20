@@ -3,6 +3,9 @@ const router = require('express').Router();
 const Users = require('./auth-model')
 const bcrypt = require('bcryptjs')
 
+const secrets = require('../config/secrets')
+const jwt = require('jsonwebtoken')
+
 router.post('/register', (req, res) => {
   let user = req.body
   
@@ -25,5 +28,16 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
   // implement login
 });
+
+//to create the token
+function generateToken(user) {
+  const payload = {
+    username: user.username
+  }
+  const options = {
+    expiresIn: '1d'
+  }
+  return jwt.sign(payload, secrets.jwtSecret, options)
+}
 
 module.exports = router;
